@@ -8,8 +8,6 @@ export const addExpenseController: RequestHandler = async (req, res) => {
   const expense: Expense = result;
   const date = expense.date;
   const formatedDate = `${date.year}-${date.month}-${date.day} ${date.hours}:${date.minutes}:${date.seconds}`;
-
-  console.log("addExpenseController: ", expense);
   await sql.execute(
     "INSERT INTO expenses (expenseAmount, categoryId, date) VALUES (?, ?, ?)",
     [expense.expenseAmount, expense.expenseType.categoryId, formatedDate],

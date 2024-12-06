@@ -9,6 +9,10 @@ export const removeCategoryController: RequestHandler = async (req, res) => {
   await sql.execute(`DELETE FROM categories WHERE categoryId = (?)`, [
     categoryId,
   ]);
+  await sql.execute(
+    `UPDATE expenses SET categoryId = 1 WHERE categoryId = (?)`,
+    [categoryId],
+  );
 
   res.status(500).json({ message: "Delete successful" });
 };

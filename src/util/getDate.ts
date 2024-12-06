@@ -29,6 +29,5 @@ export function formatDate(date: Date): ParsedDate {
     minutes: date.getMinutes(),
     seconds: date.getSeconds(),
   };
-  console.log(formatedDate);
   return formatedDate;
 }

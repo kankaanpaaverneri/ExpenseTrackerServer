@@ -31,6 +31,5 @@ export const getExpensesController: RequestHandler = async (req, res, next) => {
       date: formatDate(date),
     };
   });
-  console.log("formatedExpense: ", formatedExpenses);
   res.status(500).json({ expenses: formatedExpenses });
 };
