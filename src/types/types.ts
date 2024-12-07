@@ -6,6 +6,7 @@ export type Category = {
 };
 
 export type Expense = {
+  expenseId: number;
   expenseAmount: number;
   expenseType: Category;
   date: ParsedDate;
