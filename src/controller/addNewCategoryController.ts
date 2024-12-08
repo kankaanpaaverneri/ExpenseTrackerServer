@@ -5,5 +5,5 @@ export const addNewCategoryController: RequestHandler = async (req, res) => {
   await sql.execute("INSERT INTO categories (categoryName) VALUES (?)", [
     req.body.categoryName,
   ]);
-  res.end();
+  res.status(200).json({ message: "New category inserted successfully" });
 };

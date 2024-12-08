@@ -10,8 +10,8 @@ const route = Router();
 route.post("/add-expense", addExpenseController);
 route.post("/add-new-category", addNewCategoryController);
 route.delete("/remove-category/:id", removeCategoryController);
-route.get("/get-expenses", getExpensesController);
-route.get("/get-categories", getCategoriesController);
+route.post("/get-expenses", getExpensesController);
+route.post("/get-categories", getCategoriesController);
 route.delete("/remove-expense/:id", removeExpenseController);
 
 export default route;

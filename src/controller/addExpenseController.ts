@@ -12,5 +12,5 @@ export const addExpenseController: RequestHandler = async (req, res) => {
     "INSERT INTO expenses (expenseAmount, categoryId, date) VALUES (?, ?, ?)",
     [expense.expenseAmount, expense.expenseType.categoryId, formatedDate],
   );
-  res.end();
+  res.status(200).json({ message: "New Expense added successfully" });
 };

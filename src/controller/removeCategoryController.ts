@@ -14,5 +14,5 @@ export const removeCategoryController: RequestHandler = async (req, res) => {
     [categoryId],
   );
 
-  res.status(500).json({ message: "Delete successful" });
+  res.status(200).json({ message: "Delete successful" });
 };

@@ -11,3 +11,33 @@ export type Expense = {
   expenseType: Category;
   date: ParsedDate;
 };
+
+export interface CategoryFilters {
+  categoryName: string;
+  categoryId: number;
+  selected: boolean;
+}
+
+export interface DateFilters {
+  from: string;
+  to: string;
+}
+
+export interface ExpenseFilters {
+  categoryFilters: CategoryFilters[];
+  dateFilters: DateFilters;
+}
+
+export interface ParsedExpenseFilters {
+  categoryIds: number[];
+  fromDate: string;
+  toDate: string;
+}
+
+export interface SqlExpensesResult {
+  id: number;
+  expenseAmount: string;
+  categoryName: string;
+  categoryId: number;
+  date: string;
+}
