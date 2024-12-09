@@ -1,5 +1,4 @@
-const maxUsername = 20;
-const maxPassword = 255;
+import { maxUsername, maxPassword } from "./constants";
 
 export const validateNewUser = (
   userId: number,

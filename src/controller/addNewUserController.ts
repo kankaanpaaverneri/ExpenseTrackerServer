@@ -9,11 +9,11 @@ export const addNewUserController: RequestHandler = async (req, res) => {
   const user: User = parseNewUserBody(req.body);
   if (!validateNewUser(user.userId, user.username, user.password)) {
     console.error("Not valid user");
-    res.end();
+    res.status(400).json("Not valid user");
     return;
   }
 
   const cryptedPassword = await bcrypt.hash(req.body.password, 12);
-  console.log("cryptedPassword: ", cryptedPassword);
+  // Insert username and crypted password to database
   res.status(200).json({ message: "New user created succesfully" });
 };
