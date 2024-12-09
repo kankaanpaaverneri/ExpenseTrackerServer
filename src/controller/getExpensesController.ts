@@ -6,10 +6,7 @@ import { parseExpenseFilters, parseFilters } from "../util/parseFilters";
 import { filterExpenses } from "../util/filterExpenses";
 import { formatExpenses } from "../util/formatExpenses";
 
-export const getExpensesController: RequestHandler = async (
-  req: Request,
-  res: Response,
-) => {
+export const getExpensesController: RequestHandler = async (req, res) => {
   //Parse information
   const filters: ExpenseFilters = parseFilters(req.body);
   if (!filters?.categoryFilters || !filters?.dateFilters) {

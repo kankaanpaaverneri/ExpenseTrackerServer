@@ -41,3 +41,9 @@ export interface SqlExpensesResult {
   categoryId: number;
   date: string;
 }
+
+export interface User {
+  userId: number;
+  username: string;
+  password: string;
+}
