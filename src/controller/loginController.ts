@@ -1,20 +1,40 @@
 import { RequestHandler } from "express";
 import { parseLoginBody } from "../util/parseLoginBody";
-import { LoginData } from "../types/types";
+import { LoginData, User } from "../types/types";
 import { validateLoginData } from "../util/validateLoginData";
+import sql from "../database/database";
+import { FieldPacket, QueryResult } from "mysql2";
+import bcrypt from "bcrypt";
 
-export const loginController: RequestHandler = (req, res) => {
+export const loginController: RequestHandler = async (req, res) => {
   const loginData: LoginData = parseLoginBody(req.body);
 
   if (!validateLoginData(loginData)) {
     res.status(400).json({ message: "Invalid request" });
     return;
   }
-  console.log("loginController: ", loginData);
 
-  // fetch data from database
+  const [resultArray, _] = (await sql.execute(
+    `
+    SELECT * FROM users
+    WHERE username = (?)
+    `,
+    [loginData.username],
+  )) as [QueryResult, FieldPacket[]];
+
+  const result = resultArray as User[];
+  if (result.length === 0) {
+    res.status(400).json({ message: "Username not found" });
+    return;
+  }
+  const user: User = result[0];
   // Compare hash to loginData password
+  const match = await bcrypt.compare(loginData.password, user.password);
   // Send user back if password and username matches
+  if (!match) {
+    res.status(400).json({ message: "Incorrect password" });
 
-  res.status(200).json({ message: "Login success" });
+    return;
+  }
+  res.status(200).json({ userId: user.userId, username: user.username });
 };

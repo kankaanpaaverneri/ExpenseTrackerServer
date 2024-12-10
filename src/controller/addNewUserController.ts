@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { parseNewUserBody } from "../util/parseNewUserBody";
 import { validateNewUser } from "../util/validateNewUser";
 import { User } from "../types/types";
+import sql from "../database/database";
 
 export const addNewUserController: RequestHandler = async (req, res) => {
   console.log("addNewUserController: ", req.body);
@@ -15,5 +16,10 @@ export const addNewUserController: RequestHandler = async (req, res) => {
 
   const cryptedPassword = await bcrypt.hash(req.body.password, 12);
   // Insert username and crypted password to database
+  await sql.execute(`INSERT INTO users (username, password) VALUES (?, ?)`, [
+    user.username,
+    cryptedPassword,
+  ]);
+
   res.status(200).json({ message: "New user created succesfully" });
 };
