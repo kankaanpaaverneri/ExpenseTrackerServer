@@ -9,9 +9,13 @@ import { formatExpenses } from "../util/formatExpenses";
 export const getExpensesController: RequestHandler = async (req, res) => {
   //Parse information
   const filters: ExpenseFilters = parseFilters(req.body);
-  if (!filters?.categoryFilters || !filters?.dateFilters) {
-    console.log("Invalid filters");
-    res.end();
+  if (
+    !filters?.categoryFilters ||
+    !filters?.dateFilters ||
+    !filters?.userFilters
+  ) {
+    res.status(400).json({ message: "Invalid filters" });
+    return;
   }
 
   const parsedExpensesFilters = parseExpenseFilters(filters);
@@ -22,6 +26,7 @@ export const getExpensesController: RequestHandler = async (req, res) => {
   if (sqlQuery.length > 0) {
     const [filterResult, fieldPacket] = (await sql.execute(sqlQuery, [
       ...parsedExpensesFilters.categoryIds,
+      ...parsedExpensesFilters.userFilters,
     ])) as [QueryResult, FieldPacket[]];
     const expenses: SqlExpensesResult[] = filterResult as SqlExpensesResult[];
     const formatedExpenses = formatExpenses(expenses);
@@ -39,6 +44,5 @@ export const getExpensesController: RequestHandler = async (req, res) => {
 
   //Format the data
   const formatedExpenses = formatExpenses(expenses);
-  console.log("formatedExpenses", formatedExpenses);
   res.status(200).json({ expenses: formatedExpenses });
 };

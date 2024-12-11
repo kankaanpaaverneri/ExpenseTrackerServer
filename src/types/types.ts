@@ -24,15 +24,23 @@ export interface DateFilters {
   to: string;
 }
 
+export interface UserFilters {
+  userId: number;
+  username: string;
+  selected: boolean;
+}
+
 export interface ExpenseFilters {
   categoryFilters: CategoryFilters[];
   dateFilters: DateFilters;
+  userFilters: UserFilters[];
 }
 
 export interface ParsedExpenseFilters {
   categoryIds: number[];
   fromDate: string;
   toDate: string;
+  userFilters: number[];
 }
 
 export interface SqlExpensesResult {
@@ -45,13 +53,13 @@ export interface SqlExpensesResult {
   username: string;
 }
 
-export interface User {
+export interface Account {
   userId: number;
   username: string;
   password: string;
 }
 
-export interface CurrentUser {
+export interface User {
   userId: number;
   username: string;
 }

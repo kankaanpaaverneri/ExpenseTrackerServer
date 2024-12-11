@@ -1,5 +1,4 @@
-import { ExpenseFilters, ParsedExpenseFilters } from "../types/types";
-import { parseExpenseFilters } from "./parseFilters";
+import { ParsedExpenseFilters } from "../types/types";
 
 function getPlaceholdersByAmount(amount: number): string {
   let placeholders = "";
@@ -25,14 +24,23 @@ function filterDates(fromDate: string, toDate: string): string {
   return `DATE(e.date) BETWEEN '${fromDate}' AND '${toDate}'`;
 }
 
+function filterUsers(userFilters: number[]): string {
+  return `e.userId IN (${getPlaceholdersByAmount(userFilters.length)})`;
+}
+
 export function filterExpenses({
   categoryIds,
   fromDate,
   toDate,
+  userFilters,
 }: ParsedExpenseFilters): string {
   let sqlQuery = ``;
 
-  if (categoryIds.length > 0 || (fromDate.length > 0 && toDate.length > 0)) {
+  if (
+    categoryIds.length > 0 ||
+    (fromDate.length > 0 && toDate.length > 0) ||
+    userFilters.length > 0
+  ) {
     sqlQuery += `
     SELECT e.id, e.expenseAmount, c.categoryName, e.date, u.userId, u.username
     FROM expenses e
@@ -55,5 +63,15 @@ export function filterExpenses({
     ${filterDates(fromDate, toDate)}
     `;
   }
+
+  if (userFilters.length > 0) {
+    if (categoryIds.length > 0 || (fromDate.length > 0 && toDate.length > 0)) {
+      sqlQuery += " AND ";
+    }
+    sqlQuery += `
+    ${filterUsers(userFilters)}
+    `;
+  }
+
   return sqlQuery;
 }

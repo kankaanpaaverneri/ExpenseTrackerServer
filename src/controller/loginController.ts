@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { parseLoginBody } from "../util/parseLoginBody";
-import { LoginData, User } from "../types/types";
+import { LoginData, Account } from "../types/types";
 import { validateLoginData } from "../util/validateLoginData";
 import sql from "../database/database";
 import { FieldPacket, QueryResult } from "mysql2";
@@ -22,12 +22,12 @@ export const loginController: RequestHandler = async (req, res) => {
     [loginData.username],
   )) as [QueryResult, FieldPacket[]];
 
-  const result = resultArray as User[];
+  const result = resultArray as Account[];
   if (result.length === 0) {
     res.status(400).json({ message: "Username not found" });
     return;
   }
-  const user: User = result[0];
+  const user: Account = result[0];
   // Compare hash to loginData password
   const match = await bcrypt.compare(loginData.password, user.password);
   // Send user back if password and username matches

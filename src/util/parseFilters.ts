@@ -4,6 +4,7 @@ export function parseFilters(body: any) {
   const parsedBody: ExpenseFilters = {
     categoryFilters: body?.categoryFilters,
     dateFilters: body?.dateFilters,
+    userFilters: body?.userFilters,
   };
   return parsedBody;
 }
@@ -15,9 +16,10 @@ export function parseExpenseFilters(
     categoryIds: [],
     fromDate: "",
     toDate: "",
+    userFilters: [],
   };
 
-  const { categoryFilters, dateFilters } = filters;
+  const { categoryFilters, dateFilters, userFilters } = filters;
   if (categoryFilters.length > 0) {
     const categoryIds = filters.categoryFilters.map(
       (category) => category.categoryId,
@@ -30,10 +32,15 @@ export function parseExpenseFilters(
     const [toDay, toMonth, toYear] = filters.dateFilters.to.split(".");
     const fromDate = `${fromYear}-${fromMonth}-${fromDay}`;
     const toDate = `${toYear}-${toMonth}-${toDay}`;
-    console.log("fromDate: ", fromDate);
-    console.log("toDate: ", toDate);
     parsedExpenseFilters.fromDate = fromDate;
     parsedExpenseFilters.toDate = toDate;
   }
+
+  if (userFilters.length > 0) {
+    parsedExpenseFilters.userFilters = userFilters.map(
+      (filter) => filter.userId,
+    );
+  }
+
   return parsedExpenseFilters;
 }

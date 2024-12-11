@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import sql from "../database/database";
 import { FieldPacket, QueryResult } from "mysql2";
-import { CurrentUser } from "../types/types";
+import { User } from "../types/types";
 
 export const getCurrentUserController: RequestHandler = async (req, res) => {
   const [result, _] = await sql.execute(`
@@ -27,7 +27,7 @@ export const getCurrentUserController: RequestHandler = async (req, res) => {
     return;
   }
 
-  const { userId, username }: CurrentUser = resultArray[0] as CurrentUser;
+  const { userId, username }: User = resultArray[0] as User;
   if (!userId || !username) {
     res.status(400).json({ message: "Queryresult undefined" });
   }

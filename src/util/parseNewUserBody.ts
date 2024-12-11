@@ -1,6 +1,6 @@
-import { User } from "../types/types";
+import { Account } from "../types/types";
 
-export function parseNewUserBody(body: any): User {
+export function parseNewUserBody(body: any): Account {
   return {
     userId: body?.userId,
     username: body?.username,
