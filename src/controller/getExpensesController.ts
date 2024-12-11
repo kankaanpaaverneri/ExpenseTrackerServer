@@ -28,16 +28,17 @@ export const getExpensesController: RequestHandler = async (req, res) => {
     res.status(200).json({ expenses: formatedExpenses });
     return;
   }
-
   const [result, _] = (await sql.execute(`
-    SELECT e.id, e.expenseAmount, c.categoryName, c.categoryId, e.date
+    SELECT e.id, e.expenseAmount, c.categoryName, c.categoryId, e.date, u.userId, u.username
     FROM expenses e
     LEFT JOIN categories c ON e.categoryId = c.categoryId
+    LEFT JOIN users u ON e.userId = u.userId
 
     `)) as [QueryResult, FieldPacket[]];
   const expenses: SqlExpensesResult[] = result as SqlExpensesResult[];
 
   //Format the data
   const formatedExpenses = formatExpenses(expenses);
+  console.log("formatedExpenses", formatedExpenses);
   res.status(200).json({ expenses: formatedExpenses });
 };

@@ -34,9 +34,10 @@ export function filterExpenses({
 
   if (categoryIds.length > 0 || (fromDate.length > 0 && toDate.length > 0)) {
     sqlQuery += `
-    SELECT e.id, e.expenseAmount, c.categoryName, e.date
+    SELECT e.id, e.expenseAmount, c.categoryName, e.date, u.userId, u.username
     FROM expenses e
     LEFT JOIN categories c ON e.categoryId = c.categoryId
+    LEFT JOIN users u ON e.userId = u.userId
     WHERE
     `;
   }

@@ -9,6 +9,7 @@ export type Expense = {
   expenseId: number;
   expenseAmount: number;
   expenseType: Category;
+  userId: number;
   date: ParsedDate;
 };
 
@@ -40,12 +41,19 @@ export interface SqlExpensesResult {
   categoryName: string;
   categoryId: number;
   date: string;
+  userId: number;
+  username: string;
 }
 
 export interface User {
   userId: number;
   username: string;
   password: string;
+}
+
+export interface CurrentUser {
+  userId: number;
+  username: string;
 }
 
 export interface LoginData {

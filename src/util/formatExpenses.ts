@@ -10,6 +10,8 @@ export function formatExpenses(expenses: SqlExpensesResult[]): Expense[] {
         categoryName: expense?.categoryName,
         categoryId: expense?.categoryId,
       },
+      userId: Number(expense?.userId),
+      username: expense.username,
       date: formatDate(date),
     };
   });

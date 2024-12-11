@@ -36,5 +36,8 @@ export const loginController: RequestHandler = async (req, res) => {
 
     return;
   }
+  sql.execute("UPDATE currentuser SET userId = (?) WHERE id = 1", [
+    user.userId,
+  ]);
   res.status(200).json({ userId: user.userId, username: user.username });
 };
