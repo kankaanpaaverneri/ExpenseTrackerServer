@@ -11,7 +11,7 @@ export function formatExpenses(expenses: SqlExpensesResult[]): Expense[] {
         categoryId: expense?.categoryId,
       },
       userId: Number(expense?.userId),
-      username: expense.username,
+      username: expense?.username,
       date: formatDate(date),
     };
   });
