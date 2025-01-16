@@ -7,3 +7,4 @@ Rest API for Handling requests from frontend mobile application
 
 ### Requires
 * [Node.js Runtime](https://nodejs.org/en)
+* [Typescript](https://www.typescriptlang.org/)
